@@ -1,0 +1,16 @@
+goos: linux
+goarch: amd64
+pkg: benchmarking
+cpu: Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz
+BenchmarkParse-8   	   61393	     17587 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   64312	     18296 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   66646	     16886 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   67022	     17225 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   73538	     21227 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   61366	     20143 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   51008	     19800 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   59432	     17886 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   60666	     22868 ns/op	    1072 B/op	      11 allocs/op
+BenchmarkParse-8   	   57640	     20900 ns/op	    1072 B/op	      11 allocs/op
+PASS
+ok  	benchmarking	14.783s
