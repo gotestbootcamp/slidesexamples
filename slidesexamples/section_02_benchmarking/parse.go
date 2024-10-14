@@ -40,3 +40,6 @@ func ParseWithReader(fileName string) (User, error) {
 	return res, nil
 
 }
+
+func PrintUsers() {
+}
