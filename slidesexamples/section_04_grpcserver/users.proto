@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "pkg/grpcusers";
+
+package users;
+
+service UserGet {
+  rpc Users (EmptyParams) returns (UsersReply);
+}
+
+message UsersReply {
+	repeated User users = 1;
+}
+
+message User {
+  string name = 1;
+  int32 age = 2;
+}
+
+message EmptyParams {}
