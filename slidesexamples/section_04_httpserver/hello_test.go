@@ -1,6 +1,8 @@
 package hello
 
 import (
+	"encoding/json"
+	"httptest/users"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -22,5 +24,21 @@ func TestRequestHandler(t *testing.T) {
 	}
 	if string(data) != "<!DOCTYPE html>\nhello, Gopher!\n" {
 		t.Errorf("Expected hello but got %v", string(data))
+	}
+}
+
+func TestFetchUsers(t *testing.T) {
+	svr := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		uu := []users.User{{"foo", 12}, {"bar", 13}}
+		json.NewEncoder(w).Encode(uu)
+	}))
+	t.Cleanup(svr.Close)
+
+	toCheck, err := FetchUsers(svr.URL)
+	if err != nil {
+		t.Error("received error", err)
+	}
+	if len(toCheck) != 2 {
+		t.Fail()
 	}
 }

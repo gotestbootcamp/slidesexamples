@@ -1,8 +1,10 @@
 package hello
 
 import (
+	"encoding/json"
 	"fmt"
 	"html"
+	"httptest/users"
 	"log"
 	"net/http"
 	"runtime/debug"
@@ -21,11 +23,12 @@ func serve(addr string) {
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", greet)
-	r.HandleFunc("/version", version)
+	r.HandleFunc("/", greetHandler)
+	r.HandleFunc("/version", versionHandler)
+	r.HandleFunc("/users", usersHandler)
 	return r
 }
-func version(w http.ResponseWriter, r *http.Request) {
+func versionHandler(w http.ResponseWriter, r *http.Request) {
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
 		http.Error(w, "no build information available", 500)
@@ -36,7 +39,18 @@ func version(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s\n", html.EscapeString(info.String()))
 }
 
-func greet(w http.ResponseWriter, r *http.Request) {
+func usersHandler(w http.ResponseWriter, r *http.Request) {
+	uu, err := users.Get()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "invalid request")
+		return
+	}
+
+	json.NewEncoder(w).Encode(uu)
+}
+
+func greetHandler(w http.ResponseWriter, r *http.Request) {
 	name := strings.Trim(r.URL.Path, "/")
 	if name == "" {
 		name = "Gopher"
